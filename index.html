@@ -112,10 +112,36 @@
  const PHONE='584143309760';
  const general='Hola Río Verde, quiero hacer un pedido. ¿Me ayudan a elegir el juego o cuaderno ideal?';
  const messages={general,help:'Hola Río Verde, quiero comprar uno de sus juegos o cuadernos, pero necesito ayuda para elegir.'};
+ const openWhatsApp=message=>{
+  const encodedText=encodeURIComponent(message);
+  const appUrl=`whatsapp://send?phone=${PHONE}&text=${encodedText}`;
+  const fallbackUrl=`https://wa.me/${PHONE}?text=${encodedText}`;
+  let appOpened=false;
+  let fallbackTimer;
+  const cleanup=()=>{
+   clearTimeout(fallbackTimer);
+   window.removeEventListener('blur',onAppOpened);
+   document.removeEventListener('visibilitychange',onVisibilityChange);
+  };
+  const onAppOpened=()=>{appOpened=true;cleanup();};
+  const onVisibilityChange=()=>{if(document.hidden)onAppOpened();};
+  window.addEventListener('blur',onAppOpened,{once:true});
+  document.addEventListener('visibilitychange',onVisibilityChange);
+  fallbackTimer=setTimeout(()=>{
+   cleanup();
+   if(!appOpened)window.location.href=fallbackUrl;
+  },1800);
+  window.location.href=appUrl;
+ };
  document.querySelectorAll('[data-wa]').forEach(link=>{
   let message=messages[link.dataset.wa]||'';
   if(link.dataset.wa==='product') message=`Hola Río Verde, quiero más información sobre ${link.dataset.product}.`;
-  const url=new URL(`https://wa.me/${PHONE}`);url.searchParams.set('text',message);link.href=url.toString();
+  link.href=`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+  link.addEventListener('click',event=>{
+   if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+   event.preventDefault();
+   openWhatsApp(message);
+  });
  });
  const track=document.getElementById('product-track'),originalCards=[...track.querySelectorAll('.product-card')],arrows=[...document.querySelectorAll('.carousel-arrow')],count=document.getElementById('carousel-count'),fill=document.getElementById('carousel-progress-fill');
  const cloneCount=Math.min(2,originalCards.length-1);
