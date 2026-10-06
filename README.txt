@@ -1,5 +1,5 @@
 RIO VERDE — POC WEB
 
-Demostración comercial estática. No es un sitio de producción.
+Home comercial estático con catálogo en carrusel. El contacto abre WhatsApp con el texto preparado; la persona debe pulsar Enviar en WhatsApp. No hay envío automático.
 
-Los CTA muestran un modal local con mensajes de ejemplo. Esta versión no abre WhatsApp.
+El sitio conserva noindex,nofollow,noarchive. Las portadas reales pueden añadirse luego en assets/products/<slug>.jpg y reemplazar el arte temporal del carrusel.
