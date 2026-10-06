@@ -38,6 +38,25 @@
 @media(max-width:680px){.nav{gap:8px}.nav a{min-height:36px;padding-inline:9px;font-size:10px}}
 @media(max-width:380px){.nav a{padding-inline:7px;font-size:9px}}
 @media(hover:none){.button:active,.nav a:active{transform:scale(.98);filter:brightness(.92)}.hero-actions .button-primary:active{color:white;background:var(--leaf)}.header-cta:active{color:white;background:var(--forest)}}
+/* Center-led editorial carousel: adjacent covers remain visible on every viewport. */
+.carousel-tools{margin-bottom:2px}
+.carousel-stage{position:relative}
+.carousel-controls{position:absolute;z-index:20;inset:50% 0 auto;display:flex;justify-content:space-between;transform:translateY(-50%);pointer-events:none}
+.carousel-arrow{pointer-events:auto;border-color:rgba(18,58,43,.16);box-shadow:0 5px 18px rgba(18,58,43,.14)}
+.product-track{position:relative;display:flex;align-items:stretch;gap:20px;grid-auto-columns:unset;grid-auto-flow:unset;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:24px calc((100% - 46%)/2) 28px;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
+.product-track::-webkit-scrollbar{display:none}
+.product-card{position:relative;flex:0 0 46%;width:46%;scroll-snap-align:center;transform-origin:center;backface-visibility:hidden;transition:transform .58s cubic-bezier(.2,.75,.25,1),opacity .45s ease,filter .45s ease,box-shadow .45s ease,border-color .45s ease}
+.product-card.is-center{z-index:5;opacity:1;filter:none;transform:scale(1);box-shadow:0 18px 42px rgba(18,58,43,.16);pointer-events:auto}
+.product-card.is-prev,.product-card.is-next{z-index:3;opacity:.7;filter:blur(.55px);transform:scale(.86) perspective(1100px) rotateY(7deg);pointer-events:auto}
+.product-card.is-next{transform:scale(.86) perspective(1100px) rotateY(-7deg)}
+.product-card.is-center:hover{transform:scale(1.015) translateY(-3px)}
+.product-card.is-away-left,.product-card.is-away-right{z-index:0;opacity:0;filter:blur(3px);transform:scale(.76) perspective(1100px) rotateY(13deg);pointer-events:none}
+.product-card.is-away-right{transform:scale(.76) perspective(1100px) rotateY(-13deg)}
+.product-card.is-clone{pointer-events:none}
+.carousel-arrow:disabled{opacity:.8;cursor:pointer}
+@media(max-width:680px){.carousel-stage{margin-inline:-5px}.carousel-controls{display:none}.product-track{gap:12px;padding:22px calc((100% - 64%)/2) 25px}.product-card{flex-basis:64%;width:64%}.product-card.is-prev,.product-card.is-next{opacity:.65;filter:blur(.35px);transform:scale(.86)}.product-card.is-away-left,.product-card.is-away-right{transform:scale(.78)}}
+@media(max-width:380px){.product-track{gap:11px;padding-inline:calc((100% - 68%)/2)}.product-card{flex-basis:68%;width:68%}}
+@media(prefers-reduced-motion:reduce){.product-card.is-prev,.product-card.is-next{filter:none;transform:scale(.9)}.product-card.is-away-left,.product-card.is-away-right{filter:none;transform:scale(.85)}}
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -57,8 +76,8 @@
 </div></section>
 <section class="catalog" id="catalogo" aria-labelledby="catalog-title"><div class="container">
 <header class="section-heading reveal"><p class="eyebrow">Seis formas de explorar</p><h2 id="catalog-title">Elige tu próxima aventura</h2><p>Cada cuaderno es una nueva forma de descubrir la biodiversidad de Venezuela.</p></header>
-<div class="carousel-tools"><p class="carousel-hint" id="carousel-hint">Desliza para descubrir los seis productos.</p><div class="carousel-controls" aria-label="Controles del carrusel"><button class="carousel-arrow" type="button" data-direction="-1" aria-label="Productos anteriores">←</button><button class="carousel-arrow" type="button" data-direction="1" aria-label="Productos siguientes">→</button></div></div>
-<div class="product-track" id="product-track" role="region" aria-label="Cuadernos y juegos de Río Verde" aria-describedby="carousel-hint" tabindex="0">
+<div class="carousel-tools"><p class="carousel-hint" id="carousel-hint">Desliza para descubrir los seis productos.</p></div>
+<div class="carousel-stage"><div class="carousel-controls" aria-label="Controles del carrusel"><button class="carousel-arrow" type="button" data-direction="-1" aria-label="Productos anteriores">←</button><button class="carousel-arrow" type="button" data-direction="1" aria-label="Productos siguientes">→</button></div><div class="product-track" id="product-track" role="region" aria-label="Cuadernos y juegos de Río Verde" aria-describedby="carousel-hint" tabindex="0">
 <!-- Product art intentionally uses the existing simple illustrations until real covers are supplied. Replace each .product-art with an image at assets/products/<slug>.jpg when available. -->
 <article class="product-card reveal" style="--delay:0ms"><div class="product-art scene-fauna" aria-hidden="true"><span class="product-kind">Juego de memoria</span><span class="product-art-icon">🦜</span></div><div class="product-copy"><h3>Fauna venezolana</h3><p>30 especies emblemáticas para aprender, reconocer y jugar en familia.</p><a class="button button-green button-card" data-wa="product" data-product="Fauna venezolana" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
 <article class="product-card reveal" style="--delay:60ms"><div class="product-art scene-croc" aria-hidden="true"><span class="product-kind">Libro de actividades</span><span class="product-art-icon">🐊</span></div><div class="product-copy"><h3>Caimanes y cocodrilos</h3><p>Actividades para descubrir especies, hábitats y curiosidades de nuestra biodiversidad.</p><a class="button button-green button-card" data-wa="product" data-product="Caimanes y cocodrilos" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
@@ -66,7 +85,7 @@
 <article class="product-card reveal" style="--delay:0ms"><div class="product-art scene-primate" aria-hidden="true"><span class="product-kind">Libro de actividades</span><span class="product-art-icon">🐒</span></div><div class="product-copy"><h3>Primates</h3><p>Juegos y contenidos educativos sobre los primates presentes en Venezuela.</p><a class="button button-green button-card" data-wa="product" data-product="Primates" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
 <article class="product-card reveal" style="--delay:60ms"><div class="product-art scene-frog" aria-hidden="true"><span class="product-kind">Libro de actividades</span><span class="product-art-icon">🐸</span></div><div class="product-copy"><h3>Sapos y ranas</h3><p>Aprender jugando sobre anfibios, ecosistemas y conservación.</p><a class="button button-green button-card" data-wa="product" data-product="Sapos y ranas" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
 <article class="product-card reveal" style="--delay:120ms"><div class="product-art scene-gift" aria-hidden="true"><span class="product-kind">Colección Río Verde</span><span class="product-art-icon">🎁</span></div><div class="product-copy"><h3>Para regalar y aprender</h3><p>Combina materiales para crear una experiencia educativa inspirada en Venezuela.</p><a class="button button-green button-card" data-wa="product" data-product="Para regalar y aprender" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
-</div><div class="carousel-status" aria-live="polite"><span id="carousel-count">1–3 de 6</span><span class="carousel-progress" aria-hidden="true"><span id="carousel-progress-fill" style="width:50%"></span></span></div>
+</div></div><div class="carousel-status" aria-live="polite"><span id="carousel-count">1 de 6</span><span class="carousel-progress" aria-hidden="true"><span id="carousel-progress-fill" style="width:16.67%"></span></span></div>
 </div></section>
 <section class="help-section" aria-labelledby="help-title"><div class="container help-inner reveal"><div><p class="eyebrow">Te acompañamos a elegir</p><h2 id="help-title">¿No sabes cuál elegir?</h2><p>Cuéntanos para quién es y te ayudamos a encontrar una opción para aprender, regalar o disfrutar en familia.</p></div><a class="button button-primary" data-wa="help" href="https://wa.me/584143309760">Ayúdame a elegir por WhatsApp</a></div></section>
 <section class="story" id="historia" aria-labelledby="story-title"><div class="story-inner reveal"><div class="story-mark" aria-hidden="true">✳</div><p class="eyebrow">Una experiencia compartida</p><h2 id="story-title">Río Verde en manos de quienes aman Venezuela</h2><p>Sorelia Franco probó los materiales de Río Verde y compartió su experiencia. Una referencia real de personas que conectan con el aprendizaje y la biodiversidad venezolana.</p></div></section>
@@ -95,30 +114,37 @@
   const url=new URL(`https://wa.me/${PHONE}`);url.searchParams.set('text',message);link.href=url.toString();
  });
  const track=document.getElementById('product-track'),originalCards=[...track.querySelectorAll('.product-card')],arrows=[...document.querySelectorAll('.carousel-arrow')],count=document.getElementById('carousel-count'),fill=document.getElementById('carousel-progress-fill');
- const cloneCount=Math.min(originalCards.length,3);
- originalCards.slice(0,cloneCount).forEach(card=>{const clone=card.cloneNode(true);clone.classList.remove('reveal','is-visible');clone.removeAttribute('style');clone.setAttribute('aria-hidden','true');clone.querySelectorAll('a,button,[tabindex]').forEach(element=>element.setAttribute('tabindex','-1'));track.append(clone);});
- const cards=[...track.querySelectorAll('.product-card')];
- const step=()=>{const card=cards[0];return card?card.getBoundingClientRect().width+parseFloat(getComputedStyle(track).columnGap||0):0};
- const visibleCount=()=>Math.max(1,Math.round(track.clientWidth/step()));
- const update=()=>{const distance=step(),visible=visibleCount(),index=Math.max(0,Math.round(track.scrollLeft/distance))%originalCards.length,lastVisible=(index+visible-1)%originalCards.length;arrows[0].disabled=index===0;arrows[1].disabled=false;count.textContent=visible===1?`${index+1} de ${originalCards.length}`:`${index+1}–${lastVisible+1} de ${originalCards.length}`;fill.style.width=`${Math.min(100,((index+visible)/originalCards.length)*100)}%`;};
- const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)'),catalog=document.querySelector('.catalog');
- const INTERVAL=4000,RESUME_DELAY=5000;
- let autoplayTimer=null,resumeTimer=null,hoverPaused=false,focusPaused=false,interactionPaused=false;
+ const cloneCount=Math.min(2,originalCards.length-1);
+ originalCards.forEach((card,index)=>{card.dataset.carouselIndex=String(index);card.classList.remove('reveal','is-visible');card.removeAttribute('style');});
+ const makeClone=card=>{const clone=card.cloneNode(true);clone.classList.remove('reveal','is-visible');clone.classList.add('is-clone');clone.removeAttribute('style');clone.setAttribute('aria-hidden','true');clone.inert=true;clone.querySelectorAll('a,button,[tabindex]').forEach(element=>element.setAttribute('tabindex','-1'));return clone;};
+ track.prepend(...originalCards.slice(-cloneCount).map(makeClone));
+ originalCards.slice(0,cloneCount).map(makeClone).forEach(card=>track.append(card));
+ const cards=[...track.querySelectorAll('.product-card')],motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)'),catalog=document.querySelector('.catalog');
+ const INTERVAL=4000,FIRST_DELAY=2400,RESUME_DELAY=5000;
+ let currentIndex=cloneCount,autoplayTimer=null,resumeTimer=null,scrollIdleTimer=null,framePending=false,pointerActive=false,hoverPaused=false,focusPaused=false,interactionPaused=false;
  const clearAutoplay=()=>{if(autoplayTimer!==null){clearTimeout(autoplayTimer);autoplayTimer=null;}};
  const canAutoplay=()=>!motionPreference.matches&&!document.hidden&&!hoverPaused&&!focusPaused&&!interactionPaused;
- const normalizeLoopPosition=()=>{const distance=step(),position=track.scrollLeft/distance,loopBoundary=originalCards.length;if(position>=loopBoundary)track.scrollLeft=(position-loopBoundary)*distance;else if(position<0)track.scrollLeft=(originalCards.length+position)*distance;};
- let normalizing=false;
- const scheduleAutoplay=(delay=INTERVAL)=>{clearAutoplay();if(!canAutoplay()||originalCards.length<2)return;autoplayTimer=setTimeout(()=>{autoplayTimer=null;if(!canAutoplay())return;const distance=step(),index=Math.max(0,Math.round(track.scrollLeft/distance));track.scrollTo({left:(index+1)*distance,behavior:motionPreference.matches?'auto':'smooth'});scheduleAutoplay(INTERVAL);},delay);};
- const pauseForInteraction=()=>{interactionPaused=true;clearAutoplay();if(resumeTimer!==null)clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{resumeTimer=null;interactionPaused=false;normalizeLoopPosition();scheduleAutoplay();},RESUME_DELAY);};
- arrows.forEach(button=>button.addEventListener('click',()=>{pauseForInteraction();track.scrollBy({left:Number(button.dataset.direction)*step(),behavior:motionPreference.matches?'auto':'smooth'});}));
- track.addEventListener('scroll',()=>requestAnimationFrame(()=>{if(!normalizing){normalizing=true;normalizeLoopPosition();normalizing=false;}update();}),{passive:true});window.addEventListener('resize',update,{passive:true});update();
+ const centeredLeft=index=>cards[index].offsetLeft+cards[index].offsetWidth/2-track.clientWidth/2;
+ const centerIndex=()=>{const center=track.scrollLeft+track.clientWidth/2;let nearest=0,distance=Infinity;cards.forEach((card,index)=>{const candidate=Math.abs(card.offsetLeft+card.offsetWidth/2-center);if(candidate<distance){nearest=index;distance=candidate;}});return nearest;};
+ const updatePositions=()=>{currentIndex=centerIndex();cards.forEach((card,index)=>{const offset=index-currentIndex;card.classList.remove('is-center','is-prev','is-next','is-away-left','is-away-right');if(offset===0)card.classList.add('is-center');else if(offset===-1)card.classList.add('is-prev');else if(offset===1)card.classList.add('is-next');else card.classList.add(offset<0?'is-away-left':'is-away-right');const unavailable=card.classList.contains('is-clone')||Math.abs(offset)>1;card.inert=unavailable;card.setAttribute('aria-hidden',String(unavailable));});const product=Number(cards[currentIndex].dataset.carouselIndex)||0;count.textContent=`${product+1} de ${originalCards.length}`;fill.style.width=`${((product+1)/originalCards.length)*100}%`;};
+ const scrollToIndex=(index,behavior='smooth')=>{track.scrollTo({left:centeredLeft(index),behavior});};
+ const normalizeLoop=()=>{if(pointerActive)return;const index=centerIndex();let replacement=index;if(index<cloneCount)replacement=index+originalCards.length;else if(index>=cloneCount+originalCards.length)replacement=index-originalCards.length;if(replacement!==index){track.classList.add('is-repositioning');track.scrollLeft=centeredLeft(replacement);currentIndex=replacement;updatePositions();requestAnimationFrame(()=>track.classList.remove('is-repositioning'));}};
+ const moveBy=direction=>{const index=centerIndex()+direction;scrollToIndex(index);};
+ const scheduleAutoplay=(delay=INTERVAL)=>{clearAutoplay();if(!canAutoplay()||originalCards.length<2)return;autoplayTimer=setTimeout(()=>{autoplayTimer=null;if(!canAutoplay())return;moveBy(1);scheduleAutoplay(INTERVAL);},delay);};
+ const pauseForInteraction=()=>{interactionPaused=true;clearAutoplay();if(resumeTimer!==null)clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{resumeTimer=null;interactionPaused=false;scheduleAutoplay(INTERVAL);},RESUME_DELAY);};
+ const resumeAfterInteraction=()=>{if(resumeTimer!==null)clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{resumeTimer=null;interactionPaused=false;scheduleAutoplay(INTERVAL);},RESUME_DELAY);};
+ arrows.forEach(button=>button.addEventListener('click',()=>{pauseForInteraction();moveBy(Number(button.dataset.direction));}));
+ track.addEventListener('scroll',()=>{if(!framePending){framePending=true;requestAnimationFrame(()=>{framePending=false;updatePositions();});}if(scrollIdleTimer!==null)clearTimeout(scrollIdleTimer);scrollIdleTimer=setTimeout(normalizeLoop,180);},{passive:true});
+ track.addEventListener('pointerdown',()=>{pointerActive=true;pauseForInteraction();},{passive:true});track.addEventListener('pointerup',()=>{pointerActive=false;resumeAfterInteraction();if(scrollIdleTimer!==null)clearTimeout(scrollIdleTimer);scrollIdleTimer=setTimeout(normalizeLoop,180);},{passive:true});track.addEventListener('pointercancel',()=>{pointerActive=false;resumeAfterInteraction();},{passive:true});
+ window.addEventListener('resize',()=>{const index=centerIndex();requestAnimationFrame(()=>{scrollToIndex(index,'auto');updatePositions();});},{passive:true});
  catalog.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'){hoverPaused=true;clearAutoplay();}});
- catalog.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'){hoverPaused=false;scheduleAutoplay();}});
+ catalog.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'){hoverPaused=false;scheduleAutoplay(INTERVAL);}});
  catalog.addEventListener('focusin',()=>{focusPaused=true;clearAutoplay();});
- catalog.addEventListener('focusout',()=>setTimeout(()=>{if(!catalog.contains(document.activeElement)){focusPaused=false;scheduleAutoplay();}},0));
- track.addEventListener('pointerdown',pauseForInteraction,{passive:true});track.addEventListener('touchstart',pauseForInteraction,{passive:true});catalog.addEventListener('wheel',pauseForInteraction,{passive:true});
- document.addEventListener('visibilitychange',()=>{if(document.hidden)clearAutoplay();else scheduleAutoplay();});
- const onMotionPreferenceChange=()=>{if(motionPreference.matches)clearAutoplay();else scheduleAutoplay();};
+ catalog.addEventListener('focusout',()=>setTimeout(()=>{if(!catalog.contains(document.activeElement)){focusPaused=false;scheduleAutoplay(INTERVAL);}},0));
+ catalog.addEventListener('wheel',pauseForInteraction,{passive:true});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearAutoplay();else scheduleAutoplay(INTERVAL);});
+ const onMotionPreferenceChange=()=>{if(motionPreference.matches)clearAutoplay();else scheduleAutoplay(FIRST_DELAY);};
+ track.scrollLeft=centeredLeft(currentIndex);updatePositions();scheduleAutoplay(FIRST_DELAY);
  if(motionPreference.addEventListener)motionPreference.addEventListener('change',onMotionPreferenceChange);else motionPreference.addListener(onMotionPreferenceChange);
  const reveals=document.querySelectorAll('.reveal');
  if('IntersectionObserver'in window&&!motionPreference.matches){const observer=new IntersectionObserver((entries,active)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');active.unobserve(entry.target);}}),{threshold:.12});reveals.forEach(item=>observer.observe(item));}else reveals.forEach(item=>item.classList.add('is-visible'));
