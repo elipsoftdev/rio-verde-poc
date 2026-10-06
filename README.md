@@ -2,4 +2,4 @@
 
 POC comercial de Río Verde desarrollado por Elipsoft para demostración. No es un sitio de producción.
 
-Sitio estático entregado como demostración comercial. Las consultas de WhatsApp se dirigen al número comercial +58 414-330-9760.
+El sitio es una experiencia estática en modo demo. Los botones muestran un modal local con mensajes de ejemplo y no abren ni contactan WhatsApp.
