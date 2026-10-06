@@ -39,24 +39,26 @@
 @media(max-width:380px){.nav a{padding-inline:7px;font-size:9px}}
 @media(hover:none){.button:active,.nav a:active{transform:scale(.98);filter:brightness(.92)}.hero-actions .button-primary:active{color:white;background:var(--leaf)}.header-cta:active{color:white;background:var(--forest)}}
 /* Center-led editorial carousel: adjacent covers remain visible on every viewport. */
-.carousel-tools{margin-bottom:2px}
+.carousel-tools{display:block;margin-bottom:4px}
+.carousel-hint{margin:0;color:var(--forest);font-size:clamp(17px,1.7vw,20px);font-weight:750;letter-spacing:-.025em;line-height:1.22}
+.carousel-subhint{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.4}
 .carousel-stage{position:relative}
 .carousel-controls{position:absolute;z-index:20;inset:50% 0 auto;display:flex;justify-content:space-between;transform:translateY(-50%);pointer-events:none}
 .carousel-arrow{pointer-events:auto;border-color:rgba(18,58,43,.16);box-shadow:0 5px 18px rgba(18,58,43,.14)}
-.product-track{position:relative;display:flex;align-items:stretch;gap:20px;grid-auto-columns:unset;grid-auto-flow:unset;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:24px calc((100% - 46%)/2) 28px;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
+.product-track{position:relative;display:flex;align-items:stretch;gap:20px;grid-auto-columns:unset;grid-auto-flow:unset;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:24px calc((100% - 42%)/2) 28px;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom}
 .product-track.is-repositioning{scroll-behavior:auto!important}
 .product-track::-webkit-scrollbar{display:none}
-.product-card{position:relative;flex:0 0 100%;width:100%;scroll-snap-align:center;transform-origin:center;backface-visibility:hidden;transition:transform .58s cubic-bezier(.2,.75,.25,1),opacity .45s ease,filter .45s ease,box-shadow .45s ease,border-color .45s ease}
+.product-card{position:relative;flex:0 0 100%;width:100%;max-width:460px;scroll-snap-align:center;transform-origin:center;backface-visibility:hidden;transition:transform .58s cubic-bezier(.2,.75,.25,1),opacity .45s ease,filter .45s ease,box-shadow .45s ease,border-color .45s ease}
 .product-card.is-center{z-index:5;opacity:1;filter:none;transform:scale(1);box-shadow:0 18px 42px rgba(18,58,43,.16);pointer-events:auto}
-.product-card.is-prev,.product-card.is-next{z-index:3;opacity:.7;filter:blur(.55px);transform:scale(.86) perspective(1100px) rotateY(7deg);pointer-events:auto}
-.product-card.is-next{transform:scale(.86) perspective(1100px) rotateY(-7deg)}
+.product-card.is-prev,.product-card.is-next{z-index:3;opacity:.7;filter:blur(.55px);transform:scale(.84) perspective(1100px) rotateY(7deg) translateX(-12vw);pointer-events:auto}
+.product-card.is-next{transform:scale(.84) perspective(1100px) rotateY(-7deg) translateX(12vw)}
 .product-card.is-center:hover{transform:scale(1.015) translateY(-3px)}
 .product-card.is-away-left,.product-card.is-away-right{z-index:0;opacity:0;filter:blur(3px);transform:scale(.76) perspective(1100px) rotateY(13deg);pointer-events:none}
 .product-card.is-away-right{transform:scale(.76) perspective(1100px) rotateY(-13deg)}
 .product-card.is-clone{pointer-events:none}
 .carousel-arrow:disabled{opacity:.8;cursor:pointer}
-@media(max-width:680px){.carousel-stage{margin-inline:-5px}.carousel-controls{display:none}.product-track{gap:12px;padding:22px calc((100% - 60%)/2) 25px}.product-card{flex-basis:100%;width:100%}.product-card.is-prev,.product-card.is-next{opacity:.65;filter:blur(.35px);transform:scale(.86)}.product-card.is-away-left,.product-card.is-away-right{transform:scale(.78)}}
-@media(max-width:380px){.product-track{gap:11px;padding-inline:calc((100% - 60%)/2)}}
+@media(max-width:680px){.carousel-stage{margin-inline:-5px}.carousel-controls{display:none}.product-track{gap:12px;padding:22px calc((100% - 55%)/2) 25px}.product-card{flex-basis:100%;width:100%;max-width:none}.product-card.is-prev,.product-card.is-next{opacity:.65;filter:blur(.35px);transform:scale(.86) translateX(-6vw)}.product-card.is-next{transform:scale(.86) translateX(6vw)}.product-card.is-away-left,.product-card.is-away-right{transform:scale(.78)}}
+@media(max-width:380px){.product-track{gap:11px;padding-inline:calc((100% - 55%)/2)}}
 @media(prefers-reduced-motion:reduce){.product-card.is-prev,.product-card.is-next{filter:none;transform:scale(.9)}.product-card.is-away-left,.product-card.is-away-right{filter:none;transform:scale(.85)}}
 </style>
 <script>document.documentElement.classList.add('js');</script>
@@ -77,8 +79,8 @@
 </div></section>
 <section class="catalog" id="catalogo" aria-labelledby="catalog-title"><div class="container">
 <header class="section-heading reveal"><p class="eyebrow">Seis formas de explorar</p><h2 id="catalog-title">Elige tu próxima aventura</h2><p>Cada cuaderno es una nueva forma de descubrir la biodiversidad de Venezuela.</p></header>
-<div class="carousel-tools"><p class="carousel-hint" id="carousel-hint">Desliza para descubrir los seis productos.</p></div>
-<div class="carousel-stage"><div class="carousel-controls" aria-label="Controles del carrusel"><button class="carousel-arrow" type="button" data-direction="-1" aria-label="Productos anteriores">←</button><button class="carousel-arrow" type="button" data-direction="1" aria-label="Productos siguientes">→</button></div><div class="product-track" id="product-track" role="region" aria-label="Cuadernos y juegos de Río Verde" aria-describedby="carousel-hint" tabindex="0">
+<div class="carousel-tools"><p class="carousel-hint" id="carousel-hint">Desliza y descubre nuestros libros</p><p class="carousel-subhint" id="carousel-subhint">Una aventura diferente en cada página.</p></div>
+<div class="carousel-stage"><div class="carousel-controls" aria-label="Controles del carrusel"><button class="carousel-arrow" type="button" data-direction="-1" aria-label="Productos anteriores">←</button><button class="carousel-arrow" type="button" data-direction="1" aria-label="Productos siguientes">→</button></div><div class="product-track" id="product-track" role="region" aria-label="Cuadernos y juegos de Río Verde" aria-describedby="carousel-hint carousel-subhint" tabindex="0">
 <!-- Product art intentionally uses the existing simple illustrations until real covers are supplied. Replace each .product-art with an image at assets/products/<slug>.jpg when available. -->
 <article class="product-card reveal" style="--delay:0ms"><div class="product-art scene-fauna" aria-hidden="true"><span class="product-kind">Juego de memoria</span><span class="product-art-icon">🦜</span></div><div class="product-copy"><h3>Fauna venezolana</h3><p>30 especies emblemáticas para aprender, reconocer y jugar en familia.</p><a class="button button-green button-card" data-wa="product" data-product="Fauna venezolana" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
 <article class="product-card reveal" style="--delay:60ms"><div class="product-art scene-croc" aria-hidden="true"><span class="product-kind">Libro de actividades</span><span class="product-art-icon">🐊</span></div><div class="product-copy"><h3>Caimanes y cocodrilos</h3><p>Actividades para descubrir especies, hábitats y curiosidades de nuestra biodiversidad.</p><a class="button button-green button-card" data-wa="product" data-product="Caimanes y cocodrilos" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div></article>
