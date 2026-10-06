@@ -96,11 +96,11 @@
  const visibleCount=()=>Math.max(1,Math.round(track.clientWidth/step()));
  const update=()=>{const distance=step(),visible=visibleCount(),index=Math.max(0,Math.round(track.scrollLeft/distance))%originalCards.length,lastVisible=(index+visible-1)%originalCards.length;arrows[0].disabled=index===0;arrows[1].disabled=false;count.textContent=visible===1?`${index+1} de ${originalCards.length}`:`${index+1}–${lastVisible+1} de ${originalCards.length}`;fill.style.width=`${Math.min(100,((index+visible)/originalCards.length)*100)}%`;};
  const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)'),catalog=document.querySelector('.catalog');
- const INTERVAL=5000,RESUME_DELAY=5000;
+ const INTERVAL=4000,RESUME_DELAY=5000;
  let autoplayTimer=null,resumeTimer=null,hoverPaused=false,focusPaused=false,interactionPaused=false;
  const clearAutoplay=()=>{if(autoplayTimer!==null){clearTimeout(autoplayTimer);autoplayTimer=null;}};
  const canAutoplay=()=>!motionPreference.matches&&!document.hidden&&!hoverPaused&&!focusPaused&&!interactionPaused;
- const normalizeLoopPosition=()=>{const distance=step(),position=track.scrollLeft/distance,base=cards.length-originalCards.length;if(position>=base)track.scrollLeft=(position-base)*distance;else if(position<0)track.scrollLeft=(originalCards.length+position)*distance;};
+ const normalizeLoopPosition=()=>{const distance=step(),position=track.scrollLeft/distance,loopBoundary=originalCards.length;if(position>=loopBoundary)track.scrollLeft=(position-loopBoundary)*distance;else if(position<0)track.scrollLeft=(originalCards.length+position)*distance;};
  let normalizing=false;
  const scheduleAutoplay=(delay=INTERVAL)=>{clearAutoplay();if(!canAutoplay()||originalCards.length<2)return;autoplayTimer=setTimeout(()=>{autoplayTimer=null;if(!canAutoplay())return;const distance=step(),index=Math.max(0,Math.round(track.scrollLeft/distance));track.scrollTo({left:(index+1)*distance,behavior:motionPreference.matches?'auto':'smooth'});scheduleAutoplay(INTERVAL);},delay);};
  const pauseForInteraction=()=>{interactionPaused=true;clearAutoplay();if(resumeTimer!==null)clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{resumeTimer=null;interactionPaused=false;normalizeLoopPosition();scheduleAutoplay();},RESUME_DELAY);};
