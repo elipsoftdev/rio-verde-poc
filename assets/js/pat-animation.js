@@ -15,8 +15,8 @@
   };
   const MIN_ATTENTION_DELAY = 12000;
   const MAX_ATTENTION_DELAY = 18000;
-  const WAVE_DURATION = 1000;
-  const WINK_DURATION = 700;
+  const WAVE_DURATION = 850;
+  const WINK_DURATION = 600;
   let stateTimer = 0;
   let attentionTimer = 0;
   let imageTimer = 0;
@@ -41,7 +41,7 @@
       images.forEach(image => { image.src = assets[next]; });
       avatars.forEach(avatar => avatar.classList.remove('is-fading'));
       imageTimer = 0;
-    }, 110);
+    }, 90);
   }
 
   function setState(state, duration, onComplete) {

@@ -276,7 +276,7 @@
     panel.hidden = false;
     launcher.setAttribute('aria-expanded', 'true');
     if (!state.greeted) {
-      addMessage('¡Hola! 🌿 Soy el asistente de Río Verde. Puedo ayudarte a conocer nuestros libros, encontrar una opción para regalar o aprender más sobre nuestra biodiversidad. ¿Qué te gustaría descubrir?', 'assistant');
+      addMessage('Hola, soy Pat, tu caimán asistente. ¿Te puedo ayudar a elegir hoy?', 'assistant');
       setSuggestions(['Ver nuestros libros', 'Ayúdame a elegir', 'Me interesan las tortugas', '¿Dónde puedo conseguirlos?', '¿Qué es Río Verde?']);
       state.greeted = true;
     }

@@ -7,11 +7,11 @@
 .rv-assistant-launcher:focus-visible,.rv-chat-close:focus-visible,.rv-chat-send:focus-visible,.rv-chat-suggestions button:focus-visible,.rv-chat-action:focus-visible,.rv-chat-composer input:focus-visible{outline:3px solid #a6cb26;outline-offset:3px}
 .rv-avatar-shell{position:relative;flex:0 0 44px;width:44px;height:44px}
 .rv-avatar{position:relative;display:block;width:100%;height:100%;overflow:hidden;border:1px solid rgba(18,58,43,.12);border-radius:50%;background:radial-gradient(circle at 34% 25%,#f6f2d7,#d9e7c4 72%)}
-.rv-pat-image{position:absolute;top:0;left:50%;width:160%;height:160%;max-width:none;object-fit:cover;object-position:center top;transform:translateX(-50%);opacity:1;pointer-events:none;transition:opacity .11s ease}
+.rv-pat-image{position:absolute;top:0;left:50%;width:160%;height:160%;max-width:none;object-fit:cover;object-position:center top;transform:translateX(-50%);opacity:1;pointer-events:none;transition:opacity .09s ease}
 .rv-avatar.is-fading .rv-pat-image{opacity:.45}
 .rv-assistant-launcher .rv-avatar-shell{transition:transform .22s ease;will-change:transform}
 .rv-assistant-launcher:hover .rv-avatar-shell{transform:translateY(-2px) scale(1.04)}
-.rv-avatar-header.is-typing[data-pat-state="idle"] .rv-pat-image{animation:rv-pat-typing 1.3s ease-in-out infinite}
+.rv-avatar-header.is-typing[data-pat-state="idle"] .rv-pat-image{animation:rv-pat-typing 1.15s ease-in-out infinite}
 @keyframes rv-pat-typing{0%,100%{transform:translateX(-50%) translateY(0) rotate(0)}50%{transform:translateX(-50%) translateY(-2px) rotate(-1deg)}}
 .rv-avatar-status{position:absolute;right:-1px;bottom:0;width:12px;height:12px;border:2px solid var(--rv-paper);border-radius:50%;background:#78a940}
 .rv-launcher-copy{display:grid;gap:3px;font-size:13px;font-weight:800;line-height:1.2}
