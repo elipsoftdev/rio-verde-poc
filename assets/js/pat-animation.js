@@ -2,25 +2,55 @@
   'use strict';
 
   const avatars = [...document.querySelectorAll('[data-pat-avatar]')];
+  const images = avatars.map(avatar => avatar.querySelector('[data-pat-image]'));
   const panel = document.getElementById('rv-assistant-panel');
   const typing = document.getElementById('rv-chat-typing');
-  if (!avatars.length || !panel || !typing) return;
+  if (!avatars.length || images.some(image => !image) || !panel || !typing) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const assets = {
+    idle: 'assets/assistant/pat-idle.webp',
+    wave: 'assets/assistant/pat-wave.webp',
+    wink: 'assets/assistant/pat-wink.webp'
+  };
   const MIN_ATTENTION_DELAY = 12000;
   const MAX_ATTENTION_DELAY = 18000;
   const WAVE_DURATION = 1000;
   const WINK_DURATION = 700;
   let stateTimer = 0;
   let attentionTimer = 0;
+  let imageTimer = 0;
+
+  function displayState(state) {
+    const next = reducedMotion.matches ? 'idle' : state;
+    window.clearTimeout(imageTimer);
+    const needsSwap = images.some(image => image.getAttribute('src') !== assets[next]);
+    avatars.forEach(avatar => {
+      avatar.dataset.patState = next;
+      avatar.classList.remove('is-fading');
+    });
+    if (!needsSwap) return;
+    if (reducedMotion.matches) {
+      images.forEach(image => {
+        if (image.getAttribute('src') !== assets[next]) image.src = assets[next];
+      });
+      return;
+    }
+    avatars.forEach(avatar => avatar.classList.add('is-fading'));
+    imageTimer = window.setTimeout(() => {
+      images.forEach(image => { image.src = assets[next]; });
+      avatars.forEach(avatar => avatar.classList.remove('is-fading'));
+      imageTimer = 0;
+    }, 110);
+  }
 
   function setState(state, duration, onComplete) {
     window.clearTimeout(stateTimer);
-    avatars.forEach(avatar => { avatar.dataset.patState = state; });
+    displayState(state);
     if (!duration || reducedMotion.matches) return;
     stateTimer = window.setTimeout(() => {
-      avatars.forEach(avatar => { avatar.dataset.patState = 'idle'; });
       stateTimer = 0;
+      displayState('idle');
       if (onComplete) onComplete();
     }, duration);
   }
@@ -74,16 +104,6 @@
     clearAttention();
     if (panel.hidden) scheduleAttention();
   }
-
-  avatars.forEach(avatar => {
-    const idleImage = avatar.querySelector('[data-pat-frame="idle"]');
-    if (!idleImage) return;
-    const markReady = () => {
-      if (idleImage.complete && idleImage.naturalWidth > 0) avatar.classList.add('has-pat-assets');
-    };
-    if (idleImage.complete) markReady();
-    else idleImage.addEventListener('load', markReady, { once: true });
-  });
 
   new MutationObserver(handlePanelChange).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
   new MutationObserver(handleTypingChange).observe(typing, { attributes: true, attributeFilter: ['hidden'] });
