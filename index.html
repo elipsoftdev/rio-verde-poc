@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#123a2b">
 <link rel="icon" type="image/png" href="assets/rio-verde-logo.png">
 <link rel="apple-touch-icon" href="assets/rio-verde-logo.png">
+<link rel="stylesheet" href="assets/css/rio-verde-assistant.css">
 <title>Río Verde — Juega. Descubre. Protege lo nuestro.</title>
 <style>
 :root{color-scheme:light;--forest:#123a2b;--deep:#0b2a20;--leaf:#08713c;--lime:#dff36b;--paper:#f7f6ef;--white:#fffefa;--ink:#18362c;--muted:#5d6d63;--line:#dfe5d9;--shadow:0 20px 55px rgba(25,52,36,.14);--font:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -108,6 +109,29 @@
 <div class="footer-col"><h2>Contacto</h2><div class="footer-links"><a class="footer-contact" data-wa="general" href="https://wa.me/584143309760">WhatsApp</a></div></div>
 </div><div class="footer-bottom"><p>© 2026 Río Verde. Todos los derechos reservados.</p><p class="footer-credit">Desarrollado por <a href="https://elipsoft.us">Elipsoft</a></p></div></div></footer>
 <div class="mobile-order-bar" aria-label="Acceso rápido al pedido"><a class="button button-green" data-wa="general" href="https://wa.me/584143309760">🟢 Haz tu pedido por WhatsApp</a></div>
+<div class="rv-assistant" id="rv-assistant" data-demo-only>
+<button class="rv-assistant-launcher" id="rv-assistant-launcher" type="button" aria-label="Abrir asistente de demostración de Río Verde" aria-haspopup="dialog" aria-expanded="false" aria-controls="rv-assistant-panel">
+<span class="rv-avatar" data-avatar-slot="assets/assistant/rio-verde-assistant.png" aria-hidden="true"><span class="rv-avatar-fallback">🐊</span><span class="rv-avatar-status"></span></span>
+<span class="rv-launcher-copy"><span>¿Te ayudo a elegir? <span aria-hidden="true">🌿</span></span><small>Asistente · demostración</small></span>
+</button>
+<section class="rv-assistant-panel" id="rv-assistant-panel" role="dialog" aria-modal="false" aria-labelledby="rv-assistant-title" aria-describedby="rv-assistant-mode" hidden>
+<header class="rv-chat-header">
+<span class="rv-avatar rv-avatar-header" data-avatar-slot="assets/assistant/rio-verde-assistant.png" aria-hidden="true"><span class="rv-avatar-fallback">🐊</span></span>
+<div class="rv-chat-identity"><strong id="rv-assistant-title">Asistente Río Verde</strong><span id="rv-assistant-mode">Demostración</span></div>
+<button class="rv-chat-close" id="rv-assistant-close" type="button" aria-label="Cerrar chat">×</button>
+</header>
+<div class="rv-chat-intro" aria-hidden="true"><span>🌱</span><span>Libros, juegos y biodiversidad venezolana</span></div>
+<div class="rv-chat-messages" id="rv-chat-messages" role="log" aria-label="Conversación con el asistente Río Verde" aria-live="polite" aria-relevant="additions text"></div>
+<div class="rv-chat-typing" id="rv-chat-typing" role="status" aria-live="polite" hidden><span></span><span></span><span></span><span class="rv-sr-only">Escribiendo</span></div>
+<div class="rv-chat-suggestions" id="rv-chat-suggestions" role="group" aria-label="Respuestas rápidas"></div>
+<form class="rv-chat-composer" id="rv-chat-form">
+<label class="rv-sr-only" for="rv-chat-input">Escribe tu mensaje</label>
+<input id="rv-chat-input" name="message" type="text" maxlength="400" autocomplete="off" enterkeyhint="send" placeholder="Escribe tu mensaje…">
+<button class="rv-chat-send" type="submit" aria-label="Enviar mensaje"><span aria-hidden="true">↑</span></button>
+</form>
+<p class="rv-chat-footnote">Una experiencia local de demostración</p>
+</section>
+</div>
 <script>
 (() => {
  const PHONE='584143309760';
@@ -134,6 +158,7 @@
   },1800);
   window.location.href=appUrl;
  };
+ window.rioVerdeOpenWhatsApp=openWhatsApp;
  document.querySelectorAll('[data-wa]').forEach(link=>{
   let message=messages[link.dataset.wa]||'';
   if(link.dataset.wa==='product') message=`Hola Río Verde, quiero más información sobre ${link.dataset.product}.`;
@@ -163,6 +188,14 @@
  const moveBy=direction=>{let index=centerIndex();track.classList.add('is-repositioning');track.scrollLeft=centeredLeft(index);if(index<cloneCount)index+=originalCards.length;else if(index>=cloneCount+originalCards.length)index-=originalCards.length;currentIndex=index;updatePositions();requestAnimationFrame(()=>track.classList.remove('is-repositioning'));scrollToIndex(index+direction);};
  const scheduleAutoplay=(delay=INTERVAL)=>{clearAutoplay();if(!canAutoplay()||originalCards.length<2)return;autoplayTimer=setTimeout(()=>{autoplayTimer=null;if(!canAutoplay())return;moveBy(1);scheduleAutoplay(INTERVAL);},delay);};
  const pauseForInteraction=()=>{interactionPaused=true;clearAutoplay();if(resumeTimer!==null)clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{resumeTimer=null;interactionPaused=false;scheduleAutoplay(INTERVAL);},RESUME_DELAY);};
+ window.rioVerdeShowProduct=productName=>{
+  const productIndex=originalCards.findIndex(card=>card.querySelector('h3')?.textContent.trim()===productName);
+  if(productIndex<0)return false;
+  pauseForInteraction();
+  document.getElementById('catalogo').scrollIntoView({behavior:motionPreference.matches?'auto':'smooth',block:'start'});
+  requestAnimationFrame(()=>scrollToIndex(cloneCount+productIndex,motionPreference.matches?'auto':'smooth'));
+  return true;
+ };
  const resumeAfterInteraction=()=>{if(resumeTimer!==null)clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{resumeTimer=null;interactionPaused=false;scheduleAutoplay(INTERVAL);},RESUME_DELAY);};
  arrows.forEach(button=>button.addEventListener('click',()=>{pauseForInteraction();moveBy(Number(button.dataset.direction));}));
  track.addEventListener('scroll',()=>{if(!framePending){framePending=true;requestAnimationFrame(()=>{framePending=false;updatePositions();});}if(scrollIdleTimer!==null)clearTimeout(scrollIdleTimer);scrollIdleTimer=setTimeout(normalizeLoop,180);},{passive:true});
@@ -182,5 +215,6 @@
  scheduleAutoplay();
 })();
 </script>
+<script src="assets/js/rio-verde-assistant.js" defer></script>
 </body>
 </html>
